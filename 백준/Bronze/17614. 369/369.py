@@ -1,15 +1,8 @@
 N = int(input())
-
-num = 1
+game = '369'
 ans = 0
-while num <= N:
-    for n in str(num):
-        if "3" == n:
-            ans += 1
-        if "6" == n:
-            ans += 1
-        if "9" == n:
-            ans += 1
-    
-    num += 1
+
+for i in range(1, N+1):
+    for check in game:
+        ans += str(i).count(check)
 print(ans)
