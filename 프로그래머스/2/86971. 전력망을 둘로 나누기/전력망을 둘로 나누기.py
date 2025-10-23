@@ -1,20 +1,20 @@
 def solution(n, wires):
     graph = [[] for _ in range(n+1)]
-    answer = n
-    
     for x, y in wires:
         graph[x].append(y)
         graph[y].append(x)
     
-    def dfs(x, visited):
-        visited[x] = True
-        count = 1
-        for nx in graph[x]:
+    
+    def dfs(node, visited):
+        num = 1
+        visited[node] = True
+        for nx in graph[node]:
             if visited[nx]:
                 continue
-            count += dfs(nx, visited)
-        return count
+            num += dfs(nx, visited)
+        return num
     
+    answer = n
     for cx, cy in wires:
         graph[cx].remove(cy)
         graph[cy].remove(cx)
