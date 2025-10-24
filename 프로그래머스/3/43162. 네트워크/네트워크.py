@@ -3,17 +3,20 @@ sys.setrecursionlimit(10**6)
 
 def solution(n, computers):
     answer = 0
-    
     visited = [False] * n
-    def dfs(start):
-        visited[start] = True
-        for i in range(n):
-            if computers[i][start] == 1 and not visited[i]:
-                dfs(i)
     
+    def dfs(idx):
+        visited[idx] = True
+        for i, node in enumerate(computers[idx]):
+            if visited[i]:
+                continue
+            if idx != i and computers[idx][i] == 1:
+                visited[i] = True
+                dfs(i)
+
     for i in range(n):
-        if visited[i] == False:
+        if not visited[i]:
             dfs(i)
-            answer +=1
+            answer += 1
     
     return answer
