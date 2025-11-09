@@ -1,49 +1,43 @@
 import sys
 from collections import deque
+sys.setrecursionlimit(10**6)
 input = sys.stdin.readline
-sys.setrecursionlimit(10**4)
-
-N, M, S = map(int, input().split())
-line = [[] for _ in range(N+1)]
-for _ in range(M):
+n, m, v = map(int, input().split())
+graph = [[] for _ in range(n+1)]
+for _ in range(m):
     a, b = map(int, input().split())
-    line[a].append(b)
-    line[b].append(a)
+    graph[a].append(b)
+    graph[b].append(a)
 
-# 작은 노드부터 방문
-for v in range(1, N+1):
-    line[v].sort()
+for i in range(n+1):
+    graph[i] = sorted(graph[i])
 
-visited_dfs = [False]*(N+1)
-ans_dfs = []
-def dfs(S):
-    ans_dfs.append(S)
-    visited_dfs[S] = True
-    for v in line[S]:
-        if visited_dfs[v] != True:
-            dfs(v)
+visited = [False] * (n+1)
+dfs_visit = []
+def dfs(x):
+    visited[x] = True
+    dfs_visit.append(x)
+    for n in graph[x]:
+        if visited[n]:
+            continue
+        dfs(n)
 
-
-
-visited_bfs = [False]*(N+1)
-ans_bfs = []
-def bfs(S):
+visited2 = [False] * (n+1)
+bfs_visit = []
+def bfs(x):
     q = deque()
-    q.append(S)
-    visited_bfs[S] = True
+    q.append(x)
+    visited2[x] = True
     while q:
-        x = q.popleft()
-        ans_bfs.append(x)
-        for v in line[x]:
-            if visited_bfs[v] != True:
-                visited_bfs[v] = True
-                q.append(v)
+        nx = q.popleft()
+        bfs_visit.append(nx)
+        for n in graph[nx]:
+            if visited2[n]:
+                continue
+            q.append(n)
+            visited2[n] = True
 
-dfs(S)
-bfs(S)
-print(*ans_dfs)
-print(*ans_bfs)
-                    
-
-
-
+dfs(v)
+bfs(v)
+print(*dfs_visit)
+print(*bfs_visit)
