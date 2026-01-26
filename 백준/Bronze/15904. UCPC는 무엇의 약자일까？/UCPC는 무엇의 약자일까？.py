@@ -2,17 +2,14 @@ import sys
 input = sys.stdin.readline
 
 target = input()
-t1 = t2 = t3 = t4 = None
-if "U" in target:
-    t1 = target.index("U")
-if t1 is not None and "C" in target[t1:]:
-    t2 = t1 + target[t1:].index("C")
-if t2 is not None and "P" in target[t2:]:
-    t3 = t2 + target[t2:].index("P")
-if t3 is not None and "C" in target[t3:]:
-    t4 = t3 + target[t3:].index("C")
+need = "UCPC"
+cnt = 0
 
-if t4 is None:
-    print("I hate UCPC")
-else:
+for t in target:
+    if cnt < 4 and t == need[cnt]:
+        cnt += 1
+
+if cnt == 4:
     print("I love UCPC")
+else:
+    print("I hate UCPC")
