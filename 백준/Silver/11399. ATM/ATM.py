@@ -1,12 +1,11 @@
 n = int(input())
-wait_time = 0
-numbers = input().split()
-list = [int(num) for num in numbers]
-wait_list = []
+people = list(map(int, input().split()))
+people.sort()
+curr = 0
 
-while len(list) > 0:
-    smallest = min(list)
-    wait_time += smallest
-    wait_list.append(wait_time)
-    list.remove(smallest)
-print(sum(wait_list))
+answer = 0
+for i in range(n):
+    curr += people[i]
+    answer += curr
+
+print(answer)
