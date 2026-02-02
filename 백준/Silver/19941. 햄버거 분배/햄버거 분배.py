@@ -1,18 +1,17 @@
-# 사람을 기준으로 한 윈도우에서 가장 왼쪽의 햄버거 먹기
 import sys
 
 input = sys.stdin.readline
-N, K = map(int, input().split())
-ham_list = [ham for ham in input().strip()]
-ans = 0
+n, k = map(int, input().split())
+target = [t for t in input().strip()]
 
-for i in range(N):
-    if ham_list[i] == 'P':
-        eat_window = ham_list[max(0,i-K):min(i+K+1,N)]
-        for j in range(len(eat_window)):
-            if eat_window[j] == 'H':
-                ham_list[max(0,i-K)+j] = 'X'
-                ans += 1
+for i in range(n):
+    if target[i] == "P":
+        start = max(0, i-k)
+        end = min(i+k+1, n)
+        window = target[start:end]
+        for j, t in enumerate(window):
+            if t == "H":
+                target[start+j] = "X"
                 break
 
-print(ans)
+print(target.count("X"))
