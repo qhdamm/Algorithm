@@ -1,14 +1,17 @@
-expression = input()
-no_minus = expression.split('-')
-answer_list = []
+import sys
 
-for part in no_minus:
-    plus_x = 0
-    plus_part = part.split('+')
-    for x in plus_part:
-        plus_x += int(x)
-    answer_list.append(plus_x)
-answer = int(answer_list[0])
-for item in answer_list[1:]:
-    answer -= int(item)
-print(answer)
+input = sys.stdin.readline
+target = input().strip().split('-')
+
+for i, t in enumerate(target):
+    num = 0
+    if "+" in t:
+        nt = map(int, t.split("+"))
+        num = sum(nt)
+        target[i] = num
+
+ans = int(target[0])
+for n in range(1, len(target)):
+    ans -= int(target[n])
+
+print(ans)
