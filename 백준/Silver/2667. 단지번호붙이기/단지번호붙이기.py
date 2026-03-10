@@ -23,7 +23,7 @@ def dfs(sy, sx):
             ny = y + dy[i]
             nx = x + dx[i]
             if 0<=ny<n and 0<=nx<n:
-                if graph[ny][nx] == "1" and not visited[ny][nx]:
+                if graph[ny][nx] == "1":
                     stack.append((ny, nx))
     return count
 
