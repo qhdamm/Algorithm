@@ -1,36 +1,39 @@
 import sys
-sys.setrecursionlimit(10**6)
+
+
 input = sys.stdin.readline
 n = int(input())
+graph = [input().strip() for _ in range(n)]
 
-graph = []
-for _ in range(n):
-    graph.append(input().strip())
+
+dy = (1, -1, 0, 0)
+dx = (0, 0, 1, -1)
 
 visited = [[False]*n for _ in range(n)]
-dx = (0, 0, 1, -1)
-dy = (1, -1, 0, 0)
-home = []
-def dfs(y, x):
-    global num
-    visited[y][x] = True
-    num += 1
-    for i in range(4):
-        ny = y + dy[i]
-        nx = x + dx[i]
-        if 0<=ny<n and 0<=nx<n and not visited[ny][nx] and graph[ny][nx] == "1":
-            dfs(ny, nx)
-    return num
+def dfs(sy, sx):
+    stack = [(sy, sx)]
+    count = 0
+    while stack:
+        y, x = stack.pop()
+        if visited[y][x]:
+            continue
+        visited[y][x] = True
+        count += 1
+        for i in range(4):
+            ny = y + dy[i]
+            nx = x + dx[i]
+            if 0<=ny<n and 0<=nx<n:
+                if graph[ny][nx] == "1" and not visited[ny][nx]:
+                    stack.append((ny, nx))
+    return count
 
+house = []
+for i in range(n):
+    for j in range(n):
+        if graph[j][i] == "1" and not visited[j][i]:
+            house.append(dfs(j, i))
 
-for y in range(n):
-    for x in range(n):
-        if not visited[y][x] and graph[y][x] == "1":
-            num = 0
-            dfs(y, x)
-            home.append(num)
-
-print(len(home))
-home.sort()
-for h in home:
+house.sort()
+print(len(house))
+for h in house:
     print(h)
