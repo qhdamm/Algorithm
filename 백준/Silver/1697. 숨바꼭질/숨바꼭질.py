@@ -1,28 +1,28 @@
 import sys
 from collections import deque
+
 input = sys.stdin.readline
-
-N, K = map(int, input().split())
-move_list = [1, -1, "x"]
-
+n, k = map(int, input().split())
 visited = [-1] * 100001
-def bfs(x):
+dx = (1, -1, "x")
+
+def bfs(n):
     q = deque()
-    q.append(x)
-    visited[x] = 0
+    q.append(n)
+    visited[n] = 0
     while q:
-        n = q.popleft()
-        if n == K:
+        x = q.popleft()
+        if x == k:
             break
         for i in range(3):
-            if move_list[i] == "x":
-                nx = 2 * n
+            if dx[i] == "x":
+                nx = 2*x
             else:
-                nx = n + move_list[i]
+                nx = x + dx[i]
             
             if 0<=nx<=100000 and visited[nx] == -1:
-                visited[nx] = visited[n] + 1
+                visited[nx] = visited[x] + 1
                 q.append(nx)
-            
-bfs(N)
-print(visited[K])
+
+bfs(n)
+print(visited[k])
