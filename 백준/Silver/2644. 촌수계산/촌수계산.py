@@ -3,27 +3,25 @@ from collections import deque
 
 input = sys.stdin.readline
 n = int(input())
-a, b = map(int, input().split())
+ta, tb = map(int, input().split())
 m = int(input())
 graph = [[] for _ in range(n+1)]
 for _ in range(m):
-    x, y = map(int, input().split())
-    graph[x].append(y)
-    graph[y].append(x)
+    a, b = map(int, input().split())
+    graph[a].append(b)
+    graph[b].append(a)
 
-visited = [-1] * (n+1)
-def bfs(x):
+visited = [-1]*(n+1)
+def bfs(ta):
     q = deque()
-    q.append(x)
-    visited[x] = 0
+    q.append(ta)
+    visited[ta] = 0
     while q:
-        nx = q.popleft()
-        if nx == b:
-            break
-        for n in graph[nx]:
-            if visited[n] == -1:
-                q.append(n)
-                visited[n] = visited[nx] + 1
+        x = q.popleft()
+        for nx in graph[x]:
+            if visited[nx] == -1:
+                visited[nx] = visited[x] + 1
+                q.append(nx)
 
-bfs(a)
-print(visited[b])
+bfs(ta)
+print(visited[tb])
