@@ -1,6 +1,7 @@
 import sys
 from collections import deque
 
+
 input = sys.stdin.readline
 n = int(input())
 m = int(input())
@@ -11,19 +12,15 @@ for _ in range(m):
     graph[b].append(a)
 
 visited = [False] * (n+1)
-virused = 0
-def bfs(x):
-    global virused
-    q = deque()
-    q.append(x)
-    visited[x] = True
-    while q:
-        nx = q.popleft()
-        for nnx in graph[nx]:
-            if not visited[nnx]:
-                q.append(nnx)
-                visited[nnx] = True
-                virused += 1
-
-bfs(1)
-print(virused)
+def dfs(start):
+    stack = [start]
+    while stack:
+        x = stack.pop()
+        if visited[x]:
+            continue
+        visited[x] = True
+        for next_node in graph[x]:
+            if not visited[next_node]:
+                stack.append(next_node)
+dfs(1)
+print(visited.count(True) - 1)
